@@ -1,0 +1,15 @@
+Сохранение непосредственно через API
+Если чтение XML-данных осуществляется с помощью одного или нескольких API, то вполне логично и сохранять XML-документ, используя те же API. К примеру, при работе с XML через JDOM API после получения ссылки на объект JDOM Document запись можно осуществлять следующим образом:
+
+XMLOutputter outputter = new XMLOutputter();
+outputter.setFormat(Format.getPrettyFormat());
+outputter.output(myDocument, new FileWriter("outputFile.xml"));
+Похожим образом в спецификации DOM Level 3 можно записывать XML, используя для его загрузки и сохранения новый API:
+
+DOMWriter writer = new org.apache.xml.serialize.XMLSerializer();
+writer.setNewLine("\r\n");
+writer.setEncoding("UTF-8");
+writer.writeNode(new FileOutputStream(new File("outputFile.xml")), myDocument);
+Новый DOM API можно использовать множеством различных способов. При этом какие-то из них сильнее привязаны к конкретной реализации DOM API, например, как вышеприведенный класс, который использует Xerces. Есть и другие способы, не зависящие от конкретных библиотек, но они не столь наглядны для демонстрации.
+
+Xerces – валидирующий XML-парсер, написанный на C++ в рамках проекта Apache.
